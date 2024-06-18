@@ -15,13 +15,26 @@
     <description>TestContainersDemoSB</description>
     <properties>
         <java.version>17</java.version>
-        <aws-sdk.version>2.25.19</aws-sdk.version>
-        <testcontainers.version>1.19.7</testcontainers.version>
+        <aws-sdk.version>2.26.3</aws-sdk.version>
+        <otel.version>1.39.0</otel.version>
+        <testcontainers.version>1.19.8</testcontainers.version>
+        <clickhouse-driver.version>0.6.1</clickhouse-driver.version>
+        <apache-http.version>5.3</apache-http.version>
+        <lz4.version>1.8.0</lz4.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
@@ -55,6 +68,31 @@
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>clickhouse</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>${clickhouse-driver.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>${apache-http.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.lz4</groupId>
+            <artifactId>lz4-java</artifactId>
+            <version>${lz4.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -65,5 +103,12 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 
 </project>

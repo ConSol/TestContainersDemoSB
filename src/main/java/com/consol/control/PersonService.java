@@ -11,7 +11,9 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,15 +23,21 @@ public class PersonService {
 
     private final DynamoDbClient dynamoDbClient;
     private final String tableName;
+    private final Randomizer randomizer;
 
-    public PersonService(final DynamoDbClient dynamoDbClient, @Value("${dynamodb.tablename}") final String tableName) {
+    public PersonService(
+            final DynamoDbClient dynamoDbClient,
+            @Value("${dynamodb.tablename}") final String tableName,
+            final Randomizer randomizer
+    ) {
         this.dynamoDbClient = dynamoDbClient;
         this.tableName = tableName;
+        this.randomizer = randomizer;
     }
 
     public IdTO store(final PersonTO personTO) {
         final String uuid = UUID.randomUUID().toString();
-        LOGGER.debug("Storing person with ID: {}", uuid);
+        LOGGER.info("Storing person with ID: {}", uuid);
         dynamoDbClient.putItem(
                 PutItemRequest.builder()
                         .tableName(tableName)
@@ -47,7 +55,7 @@ public class PersonService {
     }
 
     public PersonTO getPersonById(final String uuid) {
-        LOGGER.debug("Fetching person for ID: {}", uuid);
+        LOGGER.info("Fetching person for ID: {}", uuid);
         final Map<String, AttributeValue> values = dynamoDbClient.getItem(
                 GetItemRequest.builder()
                         .tableName(tableName)
@@ -59,5 +67,21 @@ public class PersonService {
                 values.get("lastname").s(),
                 Integer.parseInt(values.get("age").n())
         );
+    }
+
+    public PersonTO getRandomPerson() {
+        LOGGER.info("Fetching a random persons");
+        return new PersonTO(randomizer.getRandomFirstName(), randomizer.getRandomLastName(), randomizer.getRandomAge());
+    }
+
+    public Optional<PersonTO> fail() {
+        LOGGER.info("Fail Fetching a random person");
+        if(randomizer.getRandomAge() %2 == 0) {
+            LOGGER.info("Got a person");
+            return Optional.of(getRandomPerson());
+        } else {
+            LOGGER.error("Did not get a person.");
+            return Optional.empty();
+        }
     }
 }

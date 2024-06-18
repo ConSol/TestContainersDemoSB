@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -31,5 +33,16 @@ public class PersonResource {
     public ResponseEntity<PersonTO> getPerson(@PathVariable("uuid") final String uuid) {
         LOGGER.info("Received GET with uuid: {}", uuid);
         return ResponseEntity.ok(personService.getPersonById(uuid));
+    }
+
+    @GetMapping(value = "/person/random", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonTO> getRandomPerson() {
+        return ResponseEntity.ok(personService.getRandomPerson());
+    }
+
+    @GetMapping(value = "/person/failRandom", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PersonTO> fail() {
+        final Optional<PersonTO> personTO = personService.fail();
+        return personTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.internalServerError().build());
     }
 }

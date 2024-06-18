@@ -1,0 +1,25 @@
+# config file version
+apiVersion: 1
+
+datasources:
+  - name: Clickhouse
+    type: grafana-clickhouse-datasource
+    jsonData:
+      defaultDatabase: otel
+      port: 8123
+      server: host.docker.internal
+      protocol: http
+      username: test
+      tlsSkipVerify: true
+      logs:
+        defaultDatabase: otel
+        defaultTable: otel_logs
+        otelEnabled: true
+        otelVersion: 1.2.9
+      traces:
+        defaultDatabase: otel
+        defaultTable: otel_traces
+        otelEnabled: true
+        otelVersion: 1.2.9
+    secureJsonData:
+      password: test
