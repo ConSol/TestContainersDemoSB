@@ -38,6 +38,7 @@ class CrudTest {
                             MountableFile.forHostPath("src/test/resources/init-resources.sh"),
                             "/etc/localstack/init/ready.d/init-resources.sh"
                     )
+                    .withServices(LocalStackContainer.Service.DYNAMODB)
                     .withNetwork(network);
 
     static ClickHouseContainer clickHouseContainer =
