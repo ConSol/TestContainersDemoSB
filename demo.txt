@@ -21,3 +21,5 @@ Demo2:
 => DynamicProperties wurden erweitert, so dass JDBCTemplate erstellt werden kann
 
 * Test logs zeigen
+* Datenbank Inhalt zeigen
+* Grafana zeigen
