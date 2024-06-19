@@ -14,4 +14,7 @@ Demo1:
 
 Demo2:
 
-*
+* Testcase zeigen, erklären und ausführen
+=> Testcontainers Network wird verwendet
+=> OTEL Agent wird an den Java Prozess angehängt (ENV JAVA_
+=>
