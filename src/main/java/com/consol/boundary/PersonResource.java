@@ -41,7 +41,7 @@ public class PersonResource {
     }
 
     @GetMapping(value = "/person/failRandom", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<PersonTO> fail() {
+    public ResponseEntity<PersonTO> maybeFail() {
         final Optional<PersonTO> personTO = personService.maybeFail();
         return personTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.internalServerError().build());
     }
