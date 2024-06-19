@@ -31,9 +31,9 @@ class CrudTest {
     /*
         It is necessary to start this test with following ENV variables
 
-        export JAVA_TOOL_OPTIONS="-javaagent:opentelemetry-javaagent.jar"
-        export OTEL_SERVICE_NAME="Testcontainers"
-        export OTEL_JAVAAGENT_CONFIGURATION_FILE="agent.properties"
+        JAVA_TOOL_OPTIONS="-javaagent:opentelemetry-javaagent.jar"
+        OTEL_SERVICE_NAME="Testcontainers"
+        OTEL_JAVAAGENT_CONFIGURATION_FILE="agent.properties"
      */
 
     static Network network = Network.newNetwork();
