@@ -122,8 +122,7 @@ class CrudTest {
         Thread.sleep(10000);
 
         final List<Long> result = jdbcTemplate.query("select count(*) from otel_logs where Body like '%Storing person%'", (rs, rowNum) -> rs.getLong(1));
-        assert result.size() == 1;
-        assert result.get(0) > 0;
+        assert result.size() == 1 && result.get(0) > 0;
 
         //Thread.sleep(1000000);
     }
