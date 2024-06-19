@@ -11,7 +11,6 @@ import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 import software.amazon.awssdk.services.dynamodb.model.GetItemRequest;
 import software.amazon.awssdk.services.dynamodb.model.PutItemRequest;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -74,13 +73,13 @@ public class PersonService {
         return new PersonTO(randomizer.getRandomFirstName(), randomizer.getRandomLastName(), randomizer.getRandomAge());
     }
 
-    public Optional<PersonTO> fail() {
-        LOGGER.info("Fail Fetching a random person");
-        if(randomizer.getRandomAge() %2 == 0) {
-            LOGGER.info("Got a person");
+    public Optional<PersonTO> maybeFail() {
+        LOGGER.info("Maybe fail when fetching a random person");
+        if(randomizer.getRandomAge() % 2 == 0) {
+            LOGGER.info("Got a person. Ok!");
             return Optional.of(getRandomPerson());
         } else {
-            LOGGER.error("Did not get a person.");
+            LOGGER.error("Did not get a person. Fail!");
             return Optional.empty();
         }
     }
