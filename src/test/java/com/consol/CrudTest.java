@@ -85,10 +85,10 @@ class CrudTest {
         dynamicPropertyRegistry.add("aws.secretKeyId", () -> localStack.getSecretKey());
         dynamicPropertyRegistry.add("dynamodb.endpoint", () -> localStack.getEndpoint());
         dynamicPropertyRegistry.add("dynamodb.tablename", () -> "test");
-        dynamicPropertyRegistry.add("spring.datasource.url", () -> "jdbc:ch://localhost:8123/otel");
-        dynamicPropertyRegistry.add("spring.datasource.username", () -> "test");
-        dynamicPropertyRegistry.add("spring.datasource.password", () -> "test");
-        dynamicPropertyRegistry.add("spring.datasource.driver-class-name", () -> "com.clickhouse.jdbc.ClickHouseDriver");
+        dynamicPropertyRegistry.add("spring.datasource.url", () -> clickHouseContainer.getJdbcUrl());
+        dynamicPropertyRegistry.add("spring.datasource.username", () -> clickHouseContainer.getUsername());
+        dynamicPropertyRegistry.add("spring.datasource.password", () -> clickHouseContainer.getPassword());
+        dynamicPropertyRegistry.add("spring.datasource.driver-class-name", () -> clickHouseContainer.getDriverClassName());
     }
 
     @Autowired

@@ -15,6 +15,9 @@ Demo1:
 Demo2:
 
 * Testcase zeigen, erklären und ausführen
+=> OTEL Agent wird an den Java Prozess angehängt
 => Testcontainers Network wird verwendet
-=> OTEL Agent wird an den Java Prozess angehängt (ENV JAVA_
-=>
+=> Clickhouse + otelCollector Container werden gestartet
+=> DynamicProperties wurden erweitert, so dass JDBCTemplate erstellt werden kann
+
+* Test logs zeigen
