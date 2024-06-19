@@ -5,8 +5,6 @@ import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.PortBinding;
 import com.github.dockerjava.api.model.Ports;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +15,7 @@ import org.testcontainers.clickhouse.ClickHouseContainer;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
@@ -31,6 +30,7 @@ class CrudTest {
 
     static Network network = Network.newNetwork();
 
+    @Container
     static LocalStackContainer localStack =
             new LocalStackContainer(DockerImageName.parse("localstack/localstack"))
                     .withCopyFileToContainer(
@@ -40,6 +40,7 @@ class CrudTest {
                     .withServices(LocalStackContainer.Service.DYNAMODB)
                     .withNetwork(network);
 
+    @Container
     static ClickHouseContainer clickHouseContainer =
             new ClickHouseContainer(DockerImageName.parse("clickhouse/clickhouse-server"))
                     .withNetwork(network)
@@ -52,6 +53,7 @@ class CrudTest {
                             .withPortBindings(new PortBinding(Ports.Binding.bindPort(8123), new ExposedPort(8123)))
                     );
 
+    @Container
     static GenericContainer<?> otelCollector =
             new GenericContainer<>(DockerImageName.parse("otel/opentelemetry-collector-contrib:latest-arm64"))
                     .withCopyToContainer(
@@ -68,20 +70,6 @@ class CrudTest {
                                     new PortBinding(Ports.Binding.bindPort(4318), new ExposedPort(4318))
                             ))
                     );
-
-    @BeforeAll
-    static void init() {
-        localStack.start();
-        clickHouseContainer.start();
-        otelCollector.start();
-    }
-
-    @AfterAll
-    static void stop() {
-        localStack.stop();
-        clickHouseContainer.stop();
-        otelCollector.stop();
-    }
 
     @DynamicPropertySource
     static void configureProperties(final DynamicPropertyRegistry dynamicPropertyRegistry) {

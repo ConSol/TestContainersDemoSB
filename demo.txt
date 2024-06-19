@@ -1,0 +1,12 @@
+Demo1:
+
+* Endpunkte, Business Layer und DB Layer zeigen
+* Testcase zeigen, erklären und ausführen
+=> @SpringBootTest um SpringBoot basierte Tests auszuführen
+=> Lädt SpringBoot Kontext, bietet Support für verschiedene WebEnvironments, kann Webserver starten der auf einem fixen Port lauscht
+=> @Testcontainers ist eine Junit-Jupiter Erweiterung und er
+* Test logs zeigen
+
+Demo2:
+
+*
