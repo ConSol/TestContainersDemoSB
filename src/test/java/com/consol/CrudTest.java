@@ -123,10 +123,12 @@ class CrudTest {
 
         assert personIn.equals(personOut);
 
-//        Thread.sleep(5000);
-//
-//        result = jdbcTemplate.query("select count(*) from otel_metrics_histogram", (rs, rowNum) -> rs.getLong(1));
-//        assert result.size() == 1;
-//        assert result.get(0) > 0;
+        Thread.sleep(10000);
+
+        final List<Long> result = jdbcTemplate.query("select count(*) from otel_logs where Body like '%Storing person%'", (rs, rowNum) -> rs.getLong(1));
+        assert result.size() == 1;
+        assert result.get(0) > 0;
+
+        //Thread.sleep(1000000);
     }
 }
