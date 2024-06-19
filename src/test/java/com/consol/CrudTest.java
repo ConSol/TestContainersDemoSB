@@ -2,13 +2,12 @@ package com.consol;
 
 import com.consol.entity.PersonTO;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.localstack.LocalStackContainer;
+import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
@@ -19,6 +18,7 @@ import static io.restassured.RestAssured.given;
 @Testcontainers
 class CrudTest {
 
+    @Container
     static LocalStackContainer localStack =
             new LocalStackContainer(DockerImageName.parse("localstack/localstack"))
                     .withCopyFileToContainer(
@@ -26,16 +26,6 @@ class CrudTest {
                             "/etc/localstack/init/ready.d/init-resources.sh"
                     )
                     .withServices(LocalStackContainer.Service.DYNAMODB);
-
-    @BeforeAll
-    static void init() {
-        localStack.start();
-    }
-
-    @AfterAll
-    static void stop() {
-        localStack.stop();
-    }
 
     @DynamicPropertySource
     static void configureProperties(final DynamicPropertyRegistry dynamicPropertyRegistry) {
