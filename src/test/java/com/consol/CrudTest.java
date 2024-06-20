@@ -70,11 +70,9 @@ class CrudTest {
                     )
                     .withNetwork(network)
                     .dependsOn(clickHouseContainer)
-                    .withExposedPorts(4317)
                     .withExposedPorts(4318)
                     .withCreateContainerCmdModifier(cmd -> cmd.getHostConfig()
                             .withPortBindings(List.of(
-                                    new PortBinding(Ports.Binding.bindPort(4317), new ExposedPort(4317)),
                                     new PortBinding(Ports.Binding.bindPort(4318), new ExposedPort(4318))
                             ))
                     );
