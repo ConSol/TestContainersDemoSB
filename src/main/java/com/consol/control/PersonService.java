@@ -2,6 +2,7 @@ package com.consol.control;
 
 import com.consol.entity.IdTO;
 import com.consol.entity.PersonTO;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,15 +24,18 @@ public class PersonService {
     private final DynamoDbClient dynamoDbClient;
     private final String tableName;
     private final Randomizer randomizer;
+    private final MeterRegistry meterRegistry;
 
     public PersonService(
             final DynamoDbClient dynamoDbClient,
             @Value("${dynamodb.tablename}") final String tableName,
-            final Randomizer randomizer
+            final Randomizer randomizer,
+            final MeterRegistry meterRegistry
     ) {
         this.dynamoDbClient = dynamoDbClient;
         this.tableName = tableName;
         this.randomizer = randomizer;
+        this.meterRegistry = meterRegistry;
     }
 
     public IdTO store(final PersonTO personTO) {
@@ -75,10 +79,12 @@ public class PersonService {
 
     public Optional<PersonTO> maybeFail() {
         LOGGER.info("Maybe fail when fetching a random person");
+        meterRegistry.counter("maybe.fail.all").increment();
         if(randomizer.getRandomAge() % 2 == 0) {
             LOGGER.info("Got a person. Ok!");
             return Optional.of(getRandomPerson());
         } else {
+            meterRegistry.counter("maybe.fail.fail").increment();
             LOGGER.error("Did not get a person. Fail!");
             return Optional.empty();
         }

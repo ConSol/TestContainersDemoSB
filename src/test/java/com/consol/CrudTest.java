@@ -29,11 +29,13 @@ import static io.restassured.RestAssured.given;
 class CrudTest {
 
     /*
-        It is necessary to start this test with following ENV variables
+        It is necessary to start this test with following ENV variables:
 
-        JAVA_TOOL_OPTIONS="-javaagent:opentelemetry-javaagent.jar"
-        OTEL_SERVICE_NAME="Testcontainers"
-        OTEL_JAVAAGENT_CONFIGURATION_FILE="agent.properties"
+        JAVA_TOOL_OPTIONS=-javaagent:opentelemetry-javaagent.jar;
+        OTEL_INSTRUMENTATION_MICROMETER_ENABLED=true;
+        OTEL_JAVAAGENT_CONFIGURATION_FILE=agent.properties;
+        OTEL_JAVAAGENT_LOGGING=none;
+        OTEL_SERVICE_NAME=Testcontainers
      */
 
     static Network network = Network.newNetwork();
