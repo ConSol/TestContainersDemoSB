@@ -32,9 +32,9 @@ class CrudTest {
         It is necessary to start this test with following ENV variables:
 
         JAVA_TOOL_OPTIONS=-javaagent:opentelemetry-javaagent.jar;
+        OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf;
+        OTEL_EXPORTER_OTLP_TIMEOUT=60000;
         OTEL_INSTRUMENTATION_MICROMETER_ENABLED=true;
-        OTEL_JAVAAGENT_CONFIGURATION_FILE=agent.properties;
-        OTEL_JAVAAGENT_LOGGING=none;
         OTEL_SERVICE_NAME=Testcontainers
      */
 
