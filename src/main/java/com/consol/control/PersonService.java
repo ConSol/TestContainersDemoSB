@@ -80,7 +80,7 @@ public class PersonService {
     public Optional<PersonTO> maybeFail() {
         LOGGER.info("Maybe fail when fetching a random person");
         meterRegistry.counter("maybe.fail.all").increment();
-        if(randomizer.getRandomAge() % 2 == 0) {
+        if (randomizer.getRandomAge() % 2 == 0) {
             LOGGER.info("Got a person. Ok!");
             return Optional.of(getRandomPerson());
         } else {
